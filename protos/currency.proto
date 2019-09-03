@@ -33,23 +33,20 @@ message CurrencyMetadata {
   bool eligibleForInterest = 1;
   bool eligibleForCelPay = 2;
   bool eligibleForLoan = 3;
-  string name = 4;
-  string walletType = 5;
-  bool isStableCoin = 6;
-  int32 decimals = 7;
-  bool depositable = 8;
-  bool utxo = 9;
-  string usd = 10;
-  string interestRate = 11;
-}
-
-message Supported {
-  repeated CurrencyMetadata currencies = 1;
+  bool eligibleForLoanCollateral = 4;
+  string name = 5;
+  string walletType = 6;
+  bool isStableCoin = 7;
+  int32 decimals = 8;
+  bool depositable = 9;
+  bool utxo = 10;
+  string usd = 11;
+  string interestRate = 12;
 }
 
 message SupportedResponse {
   int32 code = 1;
-  Supported payload = 2;
+  repeated CurrencyMetadata payload = 2;
 }
 
 message BalancesResponse {
