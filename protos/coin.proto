@@ -3,6 +3,14 @@ package coin;
 
 message Coin {
   string coin = 1;
+  string rate = 2;
+  currency.Currency currency = 3;
+}
+
+message CompositeBy {
+  string coin = 1;
+  string total = 2;
+  string total_usd = 3;
 }
 
 message WithMessage {

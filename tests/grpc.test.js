@@ -28,6 +28,8 @@ module.exports = {
   getKYC: clientWrap('GetKYC'),
   submitKYC: clientWrap('SubmitKYC'),
   supportedCurrencies: clientWrap('SupportedCurrencies'),
+  interestRates: clientWrap('InterestRates'),
+  community: clientWrap('Community'),
 }
 
 function call (transfer, transform) {

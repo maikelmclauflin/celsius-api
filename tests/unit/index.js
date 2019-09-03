@@ -1,8 +1,10 @@
 module.exports = Object.assign(
   {},
+  require('./community'),
   require('./get-kyc'),
   require('./health-check'),
   require('./health-submission'),
+  require('./interest-rates'),
   require('./submit-kyc'),
   require('./supported-currencies'),
   require('./transaction-status'),

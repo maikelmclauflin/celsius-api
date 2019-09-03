@@ -6,6 +6,7 @@ import "coin.proto";
 import "currency.proto";
 import "transaction.proto";
 import "kyc.proto";
+import "stats.proto";
 import "wallet.proto";
 
 option go_package="v1";
@@ -31,6 +32,10 @@ service V1 {
   rpc GetKYC (utils.AuthedRequest) returns (kyc.StateResponse);
   // Submit KYC Status
   rpc SubmitKYC (kyc.SubmitRequest) returns (kyc.SubmitResponse);
-  // Submit KYC Status
+  // Get Supported Currencies
   rpc SupportedCurrencies (utils.Empty) returns (currency.SupportedResponse);
+  // Get Interest Rates
+  rpc InterestRates (utils.AuthedRequest) returns (currency.InterestRatesResponse);
+  // Get Community Stats
+  rpc Community (utils.Empty) returns (stats.CommunityResponse);
 }

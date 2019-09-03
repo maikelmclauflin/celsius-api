@@ -1,0 +1,23 @@
+syntax = "proto3";
+package stats;
+
+import "coin.proto";
+
+message Community {
+  int64 users_num = 1;
+  string total_deposits_usd = 2;
+  coin.CompositeBy highest_deposit = 3;
+  string average_deposit_usd = 4;
+  string total_depositors_num = 5;
+  string total_celpay_sent_usd = 6;
+  string celpay_transactions_num = 7;
+  string highest_celpay_transaction_usd = 8;
+  string total_interests_usd = 9;
+  string average_interest_earned_usd = 10;
+  repeated coin.Coin interest_rates = 11;
+}
+
+message CommunityResponse {
+  int32 code = 1;
+  Community payload = 2;
+}

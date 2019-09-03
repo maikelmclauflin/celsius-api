@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const utils = require('../utils')
 
 module.exports = {
   auth,
@@ -14,6 +15,8 @@ module.exports = {
   getKYC,
   submitKYC,
   supportedCurrencies,
+  interestRates,
+  community,
 }
 
 function auth (isAuthed) {
@@ -112,6 +115,33 @@ async function submitKYC (payload) {
 
 async function supportedCurrencies () {
   return {
-    currencies: [{"eligibleForInterest":true,"eligibleForCelPay":true,"eligibleForLoan":false,"name":"USDT ERC20","walletType":"ETH","isStableCoin":true,"decimals":6,"depositable":true,"utxo":false,"usd":"1.0015900712","interestRate":"0.0810"}]
+    currencies: [{
+      eligibleForInterest: true,
+      eligibleForCelPay: true,
+      eligibleForLoan: false,
+      name: 'USDT ERC20',
+      walletType: 'ETH',
+      isStableCoin: true,
+      decimals: 6,
+      depositable: true,
+      utxo: false,
+      usd: '1.0015900712',
+      interestRate: '0.0810',
+    }]
   }
+}
+
+async function interestRates () {
+  return {
+    rates: [{
+      eligibleForInterest: true,
+      eligibleForCelPay: true,
+      name: 'USDT ERC20',
+      interestRate: '0.3',
+    }]
+  }
+}
+
+async function community () {
+  return utils.readDataFile('community.json')
 }
