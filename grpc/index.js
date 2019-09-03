@@ -1,8 +1,11 @@
 const path = require('path')
 const grpc = require('grpc')
 const _ = require('lodash')
-const workers = require('./workers')
-const env = require('../env')
+const mock = require('./mock')
+const {
+  GRPC_ENABLED,
+  API_KEY,
+} = require('../env')
 const protoLoader = require('@grpc/proto-loader')
 const v1FilePath = path.join(__dirname, '..', 'protos', 'v1.proto')
 const options = {
@@ -15,21 +18,25 @@ const options = {
 module.exports = start
 
 async function start () {
-  if (!env.GRPC_ENABLED) {
+  if (!GRPC_ENABLED) {
     return
   }
   const v1Definition = protoLoader.loadSync(v1FilePath, options)
   const v1Proto = grpc.loadPackageDefinition(v1Definition)
   const server = new grpc.Server()
-  const auth = workers.auth((key) => env.API_KEY === key)
+  const auth = mock.auth((key) => API_KEY === key)
+  const { unwrap, } = mock
   server.addService(v1Proto.v1.V1.service, {
-    HealthSubmission: urnaryHandler([workers.healthSubmission]),
-    HealthCheck: urnaryHandler([workers.healthCheck]),
-    WalletBalances: streamHandler([auth, workers.walletBalances]),
-    WalletBalance: urnaryHandler([auth, workers.walletBalance]),
-    WalletInterest: urnaryHandler([auth, workers.walletInterest]),
-    WalletDeposit: urnaryHandler([auth, workers.walletDeposit]),
-    WalletWithdraw: urnaryHandler([auth, workers.walletWithdraw]),
+    HealthSubmission: urnaryHandler([unwrap, mock.healthSubmission]),
+    HealthCheck: urnaryHandler([unwrap, mock.healthCheck]),
+    WalletBalances: urnaryHandler([auth, unwrap, mock.walletBalances]),
+    WalletBalance: urnaryHandler([auth, unwrap, mock.walletBalance]),
+    WalletInterest: urnaryHandler([auth, unwrap, mock.walletInterest]),
+    WalletDeposit: urnaryHandler([auth, unwrap, mock.walletDeposit]),
+    WalletWithdraw: urnaryHandler([auth, unwrap, mock.walletWithdraw]),
+    TransactionStatus: urnaryHandler([auth, unwrap, mock.transactionStatus]),
+    GetKYC: urnaryHandler([auth, unwrap, mock.getKYC]),
+    SubmitKYC: urnaryHandler([auth, unwrap, mock.submitKYC]),
   })
   server.bind('localhost:50051', grpc.ServerCredentials.createInsecure())
   server.start()
@@ -99,8 +106,9 @@ async function currencyUpdate (result) {
 async function runList (memo, fns) {
   let result = memo
   for (let i = 0; i < fns.length; i++) {
-    result = await fns[i](result, result.filter || {})
+    result = await fns[i](result)
     if (!result && !_.isString(result)) {
+      console.log(fns, i, result)
       throw Object.assign(new Error('not found'), {
         code: 404,
         status: grpc.status.NOT_FOUND
@@ -113,7 +121,11 @@ async function runList (memo, fns) {
 function urnaryHandler (fns) {
   return async function (call, callback) {
     try {
-      callback(null, await runList(call.request, fns))
+      const payload = await runList(call.request, fns)
+      callback(null, {
+        code: 0,
+        payload,
+      })
     } catch (e) {
       callback(e, null)
     }

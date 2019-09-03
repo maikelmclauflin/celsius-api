@@ -1,0 +1,45 @@
+syntax = "proto3";
+package wallet;
+
+import "transaction";
+import "coin";
+
+message InterestAmount {
+  string amount = 1;
+}
+
+message InterestResponse {
+  int32 code = 1;
+  InterestAmount payload = 2;
+}
+
+message InterestRequest {
+  Auth auth = 1;
+  coin.Coin payload = 2;
+}
+
+message DepositResponse {
+  int32 code = 1;
+  utils.Address payload = 2;
+}
+
+message DepositRequest {
+  Auth auth = 1;
+  transaction.Transaction payload = 2;
+}
+
+message Withdrawal {
+  string coin = 1;
+  string address = 2;
+  string amount = 3;
+}
+
+message WithdrawalRequest {
+  Auth auth = 1;
+  Withdrawal payload = 2;
+}
+
+message WithdrawalResponse {
+  int32 code = 1;
+  transaction.Transaction payload = 2;
+}

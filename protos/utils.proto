@@ -1,0 +1,32 @@
+syntax = "proto3";
+package utils;
+
+message Message {
+  string message = 1;
+}
+
+message MessageRequest {
+  Message payload = 1;
+}
+
+message HealthStatus {
+  string originalMessage = 1;
+  map<string, string> request = 2;
+}
+
+message HealthStatusResponse {
+  int32 code = 1;
+  HealthStatus payload = 2;
+}
+
+message Auth {
+  string apiKey = 1;
+}
+
+message AuthedRequest {
+  Auth auth = 1;
+}
+
+message Address {
+  string address = 1;
+}

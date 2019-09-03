@@ -1,0 +1,26 @@
+syntax = "proto3";
+package transaction;
+
+message Transaction {
+  string transaction_id = 1;
+}
+
+message Response {
+  int32 code = 1;
+  Transaction payload = 2;
+}
+
+message Status {
+  string transaction_id = 1;
+  string state = 2;
+}
+
+message StatusRequest {
+  Auth auth = 1;
+  Transaction payload = 2;
+}
+
+message StatusResponse {
+  int32 code = 1;
+  Status payload = 2;
+}

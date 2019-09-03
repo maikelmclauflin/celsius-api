@@ -19,11 +19,14 @@ test.before(startGrpcServer)
 module.exports = {
   healthSubmission: clientWrap('HealthSubmission'),
   healthCheck: clientWrap('HealthCheck'),
-  walletBalances: clientWrap('WalletBalances', { stream: true, }),
+  walletBalances: clientWrap('WalletBalances'),
   walletBalance: clientWrap('WalletBalance'),
   walletInterest: clientWrap('WalletInterest'),
   walletDeposit: clientWrap('WalletDeposit'),
   walletWithdraw: clientWrap('WalletWithdraw'),
+  transactionStatus: clientWrap('TransactionStatus'),
+  getKYC: clientWrap('GetKYC'),
+  submitKYC: clientWrap('SubmitKYC'),
 }
 
 function call (transfer, transform) {

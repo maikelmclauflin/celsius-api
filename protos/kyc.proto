@@ -1,0 +1,46 @@
+syntax = "proto3";
+package kyc;
+
+import "utils";
+
+message User {
+  string first_name = 1;
+  string last_name = 2;
+  string middle_name = 3;
+  string title = 4;
+  string date_of_birth = 5;
+  string citizenship = 6;
+  string country = 7;
+  string state = 8;
+  string city = 9;
+  string building_number = 10;
+  string flat_number = 11;
+  string itin = 12;
+  string national_id = 13;
+  string ssn = 14;
+  string gender = 15;
+  string phone_number = 16;
+  string document_type = 17;
+  bytes document_front_image = 18;
+  bytes document_back_image = 19;
+}
+
+message State {
+  string status = 1;
+  map<string, string> reasons = 2;
+}
+
+message StateResponse {
+  int32 code = 1;
+  State payload = 2;
+}
+
+message SubmitRequest {
+  Auth auth = 1;
+  User payload = 2;
+}
+
+message SubmitResponse {
+  int32 code = 1;
+  utils.Message payload = 2;
+}

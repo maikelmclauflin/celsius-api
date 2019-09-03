@@ -1,0 +1,16 @@
+syntax = "proto3";
+package coin;
+
+message Coin {
+  string coin = 1;
+}
+
+message WithMessage {
+  int32 code = 1;
+  string message = 2;
+}
+
+message Request {
+  Auth auth = 1;
+  Coin payload = 2;
+}

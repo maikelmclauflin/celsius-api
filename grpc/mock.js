@@ -2,6 +2,7 @@ const _ = require('lodash')
 
 module.exports = {
   auth,
+  unwrap,
   healthSubmission,
   healthCheck,
   walletBalances,
@@ -9,15 +10,24 @@ module.exports = {
   walletInterest,
   walletDeposit,
   walletWithdraw,
+  transactionStatus,
+  getKYC,
+  submitKYC,
 }
 
 function auth (isAuthed) {
-  return async (payload) => {
-    if (await isAuthed(payload.apiKey)) {
+  return async (request) => {
+    const { auth, payload, } = request
+    const authed = await isAuthed(auth.apiKey)
+    if (!authed) {
       throw new Error('apiKey is not authed')
     }
-    return _.omit(payload, 'apiKey')
+    return request
   }
+}
+
+function unwrap (request) {
+  return request.payload || {}
 }
 
 async function healthSubmission (payload) {
@@ -77,4 +87,24 @@ async function lookupBalances () {
     coin: 'DAI',
     amount: '1000',
   }])))
+}
+
+async function transactionStatus () {
+  return {
+    transaction_id: '139f3821d947bce9c96c42e5dc0066fd064609d5dcb0d151ae3dbe517e7b6e80',
+    state: 'complete',
+  }
+}
+
+async function getKYC () {
+  return {
+    status: 'pending',
+    reasons: {},
+  }
+}
+
+async function submitKYC (payload) {
+  return {
+    message: 'Kyc started.'
+  }
 }
