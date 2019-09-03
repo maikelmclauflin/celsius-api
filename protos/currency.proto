@@ -6,6 +6,29 @@ message CurrencyBalance {
   string amount = 2;
 }
 
+message Currency {
+  bool eligibleForInterest = 1;
+  bool eligibleForCelPay = 2;
+  bool eligibleForLoan = 3;
+  string name = 4;
+  string walletType = 5;
+  bool isStableCoin = 6;
+  int32 decimals = 7;
+  bool depositable = 8;
+  bool utxo = 9;
+  string usd = 10;
+  string interestRate = 11;
+}
+
+message Supported {
+  repeated Currency currencies = 1;
+}
+
+message SupportedResponse {
+  int32 code = 1;
+  Supported payload = 2;
+}
+
 message BalancesResponse {
   int32 code = 1;
   repeated CurrencyBalance payload = 2;

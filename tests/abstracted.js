@@ -22,6 +22,7 @@ function generate(key, io) {
     transactionStatus,
     getKYC,
     submitKYC,
+    supportedCurrencies,
   }
 
   function healthSubmission() {
@@ -194,6 +195,19 @@ function generate(key, io) {
       })
       t.deepEqual({
         message: 'Kyc started.',
+      }, payload, 'returns an address for a coin to be deposited into')
+    })
+  }
+
+  function supportedCurrencies() {
+    test('supported currencies', async (t) => {
+      const { body: { payload, }, } = await io.supportedCurrencies({
+        inputs: {
+          auth: { apiKey: API_KEY, },
+        },
+      })
+      t.deepEqual({
+        currencies: [{"eligibleForInterest":true,"eligibleForCelPay":true,"eligibleForLoan":false,"name":"USDT ERC20","walletType":"ETH","isStableCoin":true,"decimals":6,"depositable":true,"utxo":false,"usd":"1.0015900712","interestRate":"0.0810"}]
       }, payload, 'returns an address for a coin to be deposited into')
     })
   }

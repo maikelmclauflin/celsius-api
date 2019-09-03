@@ -13,6 +13,7 @@ module.exports = {
   transactionStatus,
   getKYC,
   submitKYC,
+  supportedCurrencies,
 }
 
 function auth (isAuthed) {
@@ -106,5 +107,11 @@ async function getKYC () {
 async function submitKYC (payload) {
   return {
     message: 'Kyc started.'
+  }
+}
+
+async function supportedCurrencies () {
+  return {
+    currencies: [{"eligibleForInterest":true,"eligibleForCelPay":true,"eligibleForLoan":false,"name":"USDT ERC20","walletType":"ETH","isStableCoin":true,"decimals":6,"depositable":true,"utxo":false,"usd":"1.0015900712","interestRate":"0.0810"}]
   }
 }

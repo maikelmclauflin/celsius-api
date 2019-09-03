@@ -27,6 +27,7 @@ module.exports = {
   transactionStatus: clientWrap('TransactionStatus'),
   getKYC: clientWrap('GetKYC'),
   submitKYC: clientWrap('SubmitKYC'),
+  supportedCurrencies: clientWrap('SupportedCurrencies'),
 }
 
 function call (transfer, transform) {

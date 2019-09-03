@@ -37,6 +37,7 @@ async function start () {
     TransactionStatus: urnaryHandler([auth, unwrap, mock.transactionStatus]),
     GetKYC: urnaryHandler([auth, unwrap, mock.getKYC]),
     SubmitKYC: urnaryHandler([auth, unwrap, mock.submitKYC]),
+    SupportedCurrencies: urnaryHandler([mock.supportedCurrencies]),
   })
   server.bind('localhost:50051', grpc.ServerCredentials.createInsecure())
   server.start()

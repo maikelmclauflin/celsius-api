@@ -31,4 +31,6 @@ service V1 {
   rpc GetKYC (utils.AuthedRequest) returns (kyc.StateResponse);
   // Submit KYC Status
   rpc SubmitKYC (kyc.SubmitRequest) returns (kyc.SubmitResponse);
+  // Submit KYC Status
+  rpc SupportedCurrencies (utils.Empty) returns (currency.SupportedResponse);
 }
