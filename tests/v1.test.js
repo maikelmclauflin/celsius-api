@@ -1,7 +1,7 @@
 import tests from './abstracted'
-import grpc from './grpc.test'
+import client from '../client'
 
-const grpcTests = tests('grpc', grpc)
+const grpcTests = tests('grpc', client)
 grpcTests.healthSubmission()
 grpcTests.healthCheck()
 grpcTests.walletBalances()
