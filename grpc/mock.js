@@ -17,6 +17,10 @@ module.exports = {
   supportedCurrencies,
   interestRates,
   community,
+  institutionUsers,
+  institutionMetadata,
+  institutionWithdrawalAddress,
+  institutionUser,
 }
 
 function auth (isAuthed) {
@@ -131,3 +135,23 @@ async function interestRates () {
 async function community () {
   return utils.readDataFile('community.json')
 }
+
+function institutionUsers () {
+  const user = utils.readDataFile('institution_user.json')
+  return [user, user, user]
+}
+
+function institutionMetadata (payload) {
+  return payload.id
+}
+
+function institutionWithdrawalAddress () {
+  return {
+    address: '0x0000000000000000000000000000000000000000'
+  }
+}
+
+function institutionUser () {
+  return utils.readDataFile('institution_user.json')
+}
+

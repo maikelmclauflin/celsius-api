@@ -1,0 +1,39 @@
+syntax = "proto3";
+package institution;
+
+import "utils.proto";
+
+message User {
+  string companyName = 1;
+  string email = 2;
+  string country = 3;
+  string state = 4;
+  string taxNumber = 5;
+  string contactPerson = 6;
+  string contactEmail = 7;
+  string note = 8;
+}
+
+message UsersResponse {
+  int32 code = 1;
+  repeated User payload = 2;
+}
+
+message UserResponse {
+  int32 code = 1;
+  User payload = 2;
+}
+
+message Id {
+  string id = 1;
+}
+
+message IdRequest {
+  utils.Auth auth = 1;
+  Id payload = 2;
+}
+
+message CreateResponse {
+  int32 code = 1;
+  User payload = 2;
+}

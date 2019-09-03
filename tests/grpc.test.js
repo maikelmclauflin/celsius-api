@@ -1,10 +1,11 @@
 const test = require('ava')
 const path = require('path')
-const startGrpcServer = require('../grpc')
 const GRPC = require('@grpc/grpc-js')
 const protoLoader = require('@grpc/proto-loader')
+const startGrpcServer = require('../grpc')
 const debug = require('../debug')
-const protopath = path.join(__dirname, '..', 'protos', 'v1.proto')
+const utils = require('../utils')
+const protopath = utils.protosPath()
 const packageDefinition = protoLoader.loadSync(protopath, {
   keepCase: true,
   longs: String,
@@ -30,6 +31,10 @@ module.exports = {
   supportedCurrencies: clientWrap('SupportedCurrencies'),
   interestRates: clientWrap('InterestRates'),
   community: clientWrap('Community'),
+  institutionUsers: clientWrap('InstitutionUsers'),
+  institutionUser: clientWrap('InstitutionUser'),
+  institutionMetadata: clientWrap('InstitutionMetadata'),
+  institutionWithdrawalAddress: clientWrap('InstitutionWithdrawalAddress'),
 }
 
 function call (transfer, transform) {

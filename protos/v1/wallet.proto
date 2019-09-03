@@ -18,7 +18,7 @@ message InterestRequest {
   coin.Coin payload = 2;
 }
 
-message DepositResponse {
+message AddressResponse {
   int32 code = 1;
   utils.Address payload = 2;
 }

@@ -16,6 +16,11 @@ message HealthStatus {
   map<string, string> request = 2;
 }
 
+message StringResponse {
+  int32 code = 1;
+  string payload = 2;
+}
+
 message HealthStatusResponse {
   int32 code = 1;
   HealthStatus payload = 2;

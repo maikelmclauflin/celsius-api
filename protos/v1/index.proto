@@ -8,6 +8,7 @@ import "transaction.proto";
 import "kyc.proto";
 import "stats.proto";
 import "wallet.proto";
+import "institution.proto";
 
 option go_package="v1";
 
@@ -23,7 +24,7 @@ service V1 {
   // Wallet interest
   rpc WalletInterest (coin.Request) returns (wallet.InterestResponse);
   // Wallet deposit
-  rpc WalletDeposit (coin.Request) returns (wallet.DepositResponse);
+  rpc WalletDeposit (coin.Request) returns (wallet.AddressResponse);
   // Wallet withdraw
   rpc WalletWithdraw (wallet.WithdrawalRequest) returns (wallet.WithdrawalResponse);
   // Transaction status
@@ -38,4 +39,12 @@ service V1 {
   rpc InterestRates (utils.AuthedRequest) returns (currency.InterestRatesResponse);
   // Get Community Stats
   rpc Community (utils.Empty) returns (stats.CommunityResponse);
+  // Get Institution Users
+  rpc InstitutionUsers (utils.AuthedRequest) returns (institution.UsersResponse);
+  // Get Institution User
+  rpc InstitutionUser (utils.AuthedRequest) returns (institution.UserResponse);
+  // Get Institution Metadata
+  rpc InstitutionMetadata (institution.IdRequest) returns (utils.StringResponse);
+  // Get Institution Withdrawal Address
+  rpc InstitutionWithdrawalAddress (institution.IdRequest) returns (wallet.AddressResponse);
 }
