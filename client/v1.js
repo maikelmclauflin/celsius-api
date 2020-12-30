@@ -1,8 +1,5 @@
-const test = require('ava')
-const path = require('path')
 const GRPC = require('@grpc/grpc-js')
 const protoLoader = require('@grpc/proto-loader')
-const startGrpcServer = require('../server')
 const debug = require('../debug')
 const utils = require('../utils')
 const protopath = utils.protosPath()
@@ -15,7 +12,6 @@ const packageDefinition = protoLoader.loadSync(protopath, {
 })
 const V1Package = new GRPC.loadPackageDefinition(packageDefinition) // eslint-disable-line
 const grpcClient = new V1Package.v1.V1('localhost:50051', GRPC.credentials.createInsecure())
-test.before(startGrpcServer)
 
 module.exports = {
   healthSubmission: clientWrap('HealthSubmission'),

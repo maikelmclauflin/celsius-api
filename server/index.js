@@ -1,5 +1,4 @@
-const path = require('path')
-const grpc = require('grpc')
+const GRPC = require('grpc')
 const _ = require('lodash')
 const utils = require('../utils')
 const mock = require('./mock')
@@ -23,10 +22,10 @@ async function start () {
     return
   }
   const v1Definition = protoLoader.loadSync(v1FilePath, options)
-  const v1Package = grpc.loadPackageDefinition(v1Definition)
-  const server = new grpc.Server()
+  const v1Package = GRPC.loadPackageDefinition(v1Definition)
+  const server = new GRPC.Server()
   const auth = mock.auth((key) => API_KEY === key)
-  const { unwrap, } = mock
+  const { unwrap } = mock
   server.addService(v1Package.v1.V1.service, {
     HealthSubmission: urnary(unwrap, mock.healthSubmission),
     HealthCheck: urnary(unwrap, mock.healthCheck),
@@ -46,49 +45,49 @@ async function start () {
     InstitutionWithdrawalAddress: urnary(auth, mock.institutionWithdrawalAddress),
     InstitutionUser: urnary(auth, mock.institutionUser),
   })
-  server.bind('localhost:50051', grpc.ServerCredentials.createInsecure())
+  server.bind('localhost:50051', GRPC.ServerCredentials.createInsecure())
   server.start()
   return server
 }
 
-function mapHistory (fn) {
-  return async function (target) {
-    return target.map(fn)
-  }
-}
+// function mapHistory (fn) {
+//   return async function (target) {
+//     return target.map(fn)
+//   }
+// }
 
-function convertDateToString (key) {
-  return (item) => {
-    const pass = item[key]
-    const { lastUpdated, date } = item
-    return {
-      lastUpdated: lastUpdated.toISOString(),
-      date: date.toISOString(),
-      [key]: pass
-    }
-  }
-}
+// function convertDateToString (key) {
+//   return (item) => {
+//     const pass = item[key]
+//     const { lastUpdated, date } = item
+//     return {
+//       lastUpdated: lastUpdated.toISOString(),
+//       date: date.toISOString(),
+//       [key]: pass
+//     }
+//   }
+// }
 
-function stream (fns) {
-  return async function (stream) {
-    try {
-      const result = await runList(stream.request, fns)
-      result.forEach((item) => stream.write(item))
-    } catch (err) {
-      const {
-        code = 500,
-        message,
-        status = grpc.status.UNKNOWN,
-      } = err
-      stream.emit('error', {
-        code,
-        message,
-        status
-      })
-    }
-    stream.end()
-  }
-}
+// function stream (fns) {
+//   return async function (stream) {
+//     try {
+//       const result = await runList(stream.request, fns)
+//       result.forEach((item) => stream.write(item))
+//     } catch (err) {
+//       const {
+//         code = 500,
+//         message,
+//         status = GRPC.status.UNKNOWN,
+//       } = err
+//       stream.emit('error', {
+//         code,
+//         message,
+//         status
+//       })
+//     }
+//     stream.end()
+//   }
+// }
 
 async function runList (memo, fns) {
   let result = memo
@@ -97,7 +96,7 @@ async function runList (memo, fns) {
     if (!result && !_.isString(result)) {
       throw Object.assign(new Error('not found'), {
         code: 404,
-        status: grpc.status.NOT_FOUND
+        status: GRPC.status.NOT_FOUND
       })
     }
   }

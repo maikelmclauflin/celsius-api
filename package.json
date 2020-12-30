@@ -12,15 +12,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@grpc/grpc-js": "^0.5.2",
-    "@grpc/proto-loader": "^0.5.1",
+    "@grpc/grpc-js": "^1.2.2",
+    "@grpc/proto-loader": "^0.5.5",
     "@hapi/joi": "^15.1.1",
-    "ava": "^2.3.0",
     "debug": "^4.1.1",
     "dotenv": "^8.1.0",
-    "grpc": "^1.23.3",
-    "lodash": "^4.17.15",
-    "supertest": "^4.0.2",
+    "grpc": "^1.24.4",
+    "lodash": "^4.17.20",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "ava": "^3.14.0",
+    "supertest": "^6.0.1"
   }
 }

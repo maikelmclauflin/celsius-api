@@ -1,5 +1,8 @@
-import tests from './abstracted'
-import client from '../client'
+const tests = require('./abstracted')
+const client = require('../client/v1')
+const test = require('ava')
+const startGrpcServer = require('../server')
+test.before(startGrpcServer)
 
 const grpcTests = tests('grpc', client)
 grpcTests.healthSubmission()

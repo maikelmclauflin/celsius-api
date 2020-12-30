@@ -14,3 +14,16 @@ until then, i just used the publicly accessable apis to fill in some gaps that i
 
 - [supported currencies](https://api.celsius.network/api/v3/web/supported_currencies)
 - [community](https://api.celsius.network/api/v3/web/community)
+
+## testing
+Add your `.env` file by creating a copy of the `.env.example` file. Then, after installing
+
+```bash
+n use lts
+npm i
+```
+
+and test
+```bash
+npm t
+```
